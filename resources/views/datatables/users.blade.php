@@ -32,7 +32,7 @@
 
             @foreach ($groups as $group)
                 
-                <a href="#" class="list-group-item d-flex justify-content-between align-items-center list-group-item-action">
+            <a href="#" id="group_{{$group->ID}}" class="list-group-item d-flex justify-content-between align-items-center list-group-item-action">
 
                     <div>
                         <span class="fa fa-id-card"></span>
@@ -49,7 +49,7 @@
 
 
     </div>
-    <div class="col-sm-8">
+    <div class="col-sm-10">
 
         <form id="form"class="form-inline">
         
@@ -152,17 +152,42 @@ $(function() {
             { data: 'UserID', name: 'UserID' },
             { data: 'FirstName', name: 'FirstName' },
             { data: 'LastName', name: 'LastName' },
-            { data: 'Groups', name: 'Grupa' },
+            { data: 'Groups', name: 'Groups', orderable: true, searchable: true },
             { data: 'StartDate', name: 'StartDate' },
             { data: 'EndDate', name: 'EndDate' }
         ]       
     });
 
     $('#btn_load_data').on('click', function (){
+        window.location.reload();
         users_table.ajax.url('{!! route('cdvi.allusers') !!}').load();
         users_table.draw();
     })
+// group list envents
+    // -----------------------------------
+    $('#group_0').on('click', function(){
+        users_table.columns(4).search("^" + "Ednodnevni" + "$", true, false, true).draw();
+    })
+    $('#group_1').on('click', function(){
+        users_table.columns(4).search("^" + "Detski" + "$", true, false, true).draw();
+    })    
+    $('#group_2').on('click', function(){
+        users_table.columns(4).search("^" + "Nedelni" + "$", true, false, true).draw();
+    })
+    $('#group_3').on('click', function(){
+        users_table.columns(4).search("^" + "Poludnevni" + "$", true, false, true).draw();
+    })
+    $('#group_4').on('click', function(){
+        users_table.columns(4).search("^" + "Nokni" + "$", true, false, true).draw();
+    })
+    $('#group_5').on('click', function(){
+        users_table.columns(4).search("^" + "Nedelni Detski" + "$", true, false, true).draw();
+    })
+    $('#group_6').on('click', function(){
+        users_table.columns(4).search("^" + "Neogranicen Pristap" + "$", true, false, true).draw();
+    })
 
+    //-----------------------------------
     $("form").on('submit',function(e){
         e.preventDefault();
         //ajax code here

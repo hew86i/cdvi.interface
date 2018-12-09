@@ -28,7 +28,7 @@ class DatatableController extends Controller
 
         // $users = cdviUser::select(['UserID','FirstName','LastName', 'StartDate','EndDate']);
 
-        $users = DB::table('Users')->join('UserGroups', 'Users.UserGroupID', '=', 'UserGroups.ID')->select('Users.UserID','Users.FirstName','Users.LastName', 'Users.StartDate','Users.EndDate','UserGroups.Nom')->get();
+        $users = DB::table('Users')->join('UserGroups', 'Users.UserGroupID', '=', 'UserGroups.ID')->select('Users.UserID','Users.FirstName','Users.LastName', 'Users.StartDate','Users.EndDate','UserGroups.Name')->get();
 
 
         // U::with(['user_group' =>function($q) {$q->select('Nom')->where('UserID', '=', 'user_group.ID');}])->get();
@@ -46,7 +46,7 @@ class DatatableController extends Controller
                 return date('d-m-Y h:m', strtotime($user->EndDate) );
             })
             ->addColumn('Groups', function ($user) {
-                return $user->Nom;
+                return $user->Name;
             })
             ->make(true);
 
