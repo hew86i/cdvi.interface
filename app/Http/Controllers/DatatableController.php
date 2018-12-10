@@ -40,10 +40,10 @@ class DatatableController extends Controller
                     return '<input type="checkbox" id="'.$user->UserID.'" name="someCheckbox" />' ;
                 }, 1)
             ->editColumn('StartDate', function ($user) {           
-                return date('d-m-Y h:m', strtotime($user->StartDate) );
+                return date('d-m-Y H:i', strtotime($user->StartDate) );
             })
             ->editColumn('EndDate', function ($user) {
-                return date('d-m-Y h:m', strtotime($user->EndDate) );
+                return date('d-m-Y H:i', strtotime($user->EndDate) );
             })
             ->addColumn('Groups', function ($user) {
                 return $user->Name;

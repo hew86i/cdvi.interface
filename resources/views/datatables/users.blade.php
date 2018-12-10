@@ -110,6 +110,8 @@ $(function() {
 
     // global vars
     selected_id = [];
+    start_date = "";
+    end_date = "";
   
     var users_table= $('#users-table').DataTable({
         dom: '<"col-sm-12"B><"col-sm-12"f>t',
@@ -190,7 +192,6 @@ $(function() {
     //-----------------------------------
     $("form").on('submit',function(e){
         e.preventDefault();
-        //ajax code here
     });
 
     $('#btn_selected').on('click', function(){
@@ -200,22 +201,7 @@ $(function() {
 
         $.each(rows_selected, function(index, rowid){
             console.log($(rowid).attr('id'))
-        })
-  
-        $('#users-table').find('input[type="checkbox"]:checked').each(function () {
-
-            // var rows_selected = users_table.column(0).checkboxes.selected();
-
-            // var $row = $(this).closest('tr');
-
-            // Get row data
-            // var data = users_table.row($row).data();
-            // console.log(data)
-            // selected_id.push(parseInt(data["UserID"]))            
-
-
-        });
-        // console.log($(rows_selected[0]).attr('id'));
+        })  
 
     })
     
@@ -234,11 +220,14 @@ $(function() {
                 time: 'far fa-clock',
         }
     });
+    // listen to change event
     $("#start_date").on("change.datetimepicker", function (e) {
         $('#end_date').datetimepicker('minDate', e.date);
+        start_date = String(moment($('#start_date').datetimepicker('viewDate')).format('YYYY-MM-DD HH:mm')) + ":00"
     });
     $("#end_date").on("change.datetimepicker", function (e) {
         $('#start_date').datetimepicker('maxDate', e.date);
+        end_date = String(moment($('#end_date').datetimepicker('viewDate')).format('YYYY-MM-DD HH:mm')) + ":00"
     });
 
     $('#btn_update').on('click', function(){
@@ -255,33 +244,7 @@ $(function() {
             selected_id.push(parseInt($(rowid).attr('id')))
         })
         
-        // $('#users-table').find('input[type="checkbox"]:checked').each(function () {
-        //     // var row = $(this);
-        //     // selected_id.push(parseInt(row.attr('id')))  
-
-            
-
-        //     var $row = $(this).closest('tr');
-
-        //     // Get row data
-        //     var data = users_table.row($row).data();
- 
-        //     selected_id.push(parseInt(data["UserID"]))                
-
-        // });
-
-        console.log('before send:')
-        console.log(selected_id)
-
-        // fix for sql query
-        // datetime picker gives value for secounds larger than 60!!!
-        // ------------------------------------------------------------
-        var start_date = String(moment($('#start_date').datetimepicker('viewDate')).format('YYYY-MM-DD HH:MM'))
-        start_date = start_date + ":00";
-        var end_date = String(moment($('#end_date').datetimepicker('viewDate')).format('YYYY-MM-DD HH:MM'))
-        end_date = end_date + ":00";
-        // --------------------------------------------------------------
-
+        console.log('Start Date: ' + start_date + ' - End date: ' + end_date)
 
         $.ajax({
             headers: {
@@ -294,8 +257,10 @@ $(function() {
                 end_date: end_date,
             },
             success:function(data){
-                console.log(data)
+                // console.log(data)
                 window.location.reload();
+                start_date = ""
+                end_date = ""
 
             }
         });
