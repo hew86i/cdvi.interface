@@ -35,6 +35,8 @@ class DatatableController extends Controller
         
         // ->where('UserGroupID', 0);
 
+        // VAZNO - 'd-m-Y H:i'
+
         return Datatables::of($users)
             ->addColumn('checkbox', function ($user) {
                     return '<input type="checkbox" id="'.$user->UserID.'" name="someCheckbox" />' ;
