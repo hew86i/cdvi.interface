@@ -2,11 +2,15 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\cdviUser::class, function (Faker $faker) {
+$factory->define(App\cdviUser::class, function (Faker $faker, $options) {
+
+    $first_name = (array_key_exists('FirstName', $options)) ? $options['FirstName'] : $faker->firstName($gender = 'male'|'female');
+    $last_name = (array_key_exists('LastName', $options)) ? $options['LastName'] : $faker->lastName;
+
     return [
         'SiteID' => 0,
-        'FirstName' => $faker->firstName($gender = 'male'|'female'),
-        'LastName' => $faker->lastName,
+        'FirstName' => $first_name,
+        'LastName' => $last_name,
         'Status' => 0,
         'StartDate' => Carbon\Carbon::today()->toDateTimeString(),
         'EndDate' => Carbon\Carbon::today()->addDay()->toDateTimeString(),
@@ -81,7 +85,7 @@ $factory->define(App\cdviUser::class, function (Faker $faker) {
         'UDDate2' => '2018-09-24 00:00:00.000',
         'UDDate3' => '2018-09-24 00:00:00.000',
         'UDDate4' => '2018-09-24 00:00:00.000',
-        'UserGroupID' => 0,
+        'UserGroupID' => 0, // -1 za da ne se dodeli vo grupa
         'Picture' => NULL,
         'BadgeID' => -1,
         'Signature' => NULL,
@@ -97,3 +101,15 @@ $factory->define(App\cdviUser::class, function (Faker $faker) {
         'MealPlanID' => -1
     ];
 });
+
+/*  copy - paste for creating users
+
+$users = [];
+for($i=1; $i<=3; $i++) {
+    $firstName = "Ednodenvna " . str_pad($i, 4, '0', STR_PAD_LEFT);;
+    $lastName = "";
+    // echo $firstName;
+    array_push($users, factory(App\cdviUser::class)->create(['FirstName' => $firstName, 'LastName' => $lastName, 'UserGroupID' => 0]));
+}
+
+*/

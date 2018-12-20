@@ -54,14 +54,14 @@
         <form id="form"class="form-inline">
         
                 <button id="btn_load_data" class="btn btn-info">Вчитај</button>
-                <button id="btn_selected" class="btn btn-danger">View Selected</button>
+                {{-- <button id="btn_selected" class="btn btn-danger">View Selected</button> --}}
                 <button id="btn_update" class="btn btn-info">Ажурирај</button> 
         
             <div class="form-group">
         
                     <div class="input-group date" id="start_date" data-target-input="nearest">
                         <div class="input-group-prepend">
-                            <span class="input-group-text">Start Date</span>
+                            <span class="input-group-text">Почеток</span>
                         </div>
                         <input type="text" class="form-control datetimepicker-input" data-toggle="datetimepicker" data-target="#start_date"/>
                         <div class="input-group-append" data-target="#start_date" data-toggle="datetimepicker">
@@ -71,7 +71,7 @@
                     <span>&nbsp;-&nbsp;</span>
                     <div class="input-group date" id="end_date" data-target-input="nearest">
                         <div class="input-group-prepend">
-                            <span class="input-group-text">End Date</span>
+                            <span class="input-group-text">Крај</span>
                         </div>
                         <input type="text" class="form-control datetimepicker-input" data-toggle="datetimepicker" data-target="#end_date"/>
                         <div class="input-group-append" data-target="#end_date" data-toggle="datetimepicker">
@@ -151,12 +151,12 @@ $(function() {
         'order': [[1, 'asc']],
         columns: [
             { data: 'checkbox', name: 'checkbox', orderable: false, searchable: false},  
-            { data: 'UserID', name: 'UserID' },
+            { data: 'UserID', name: 'UserID', orderable: true, searchable: false},
             { data: 'FirstName', name: 'FirstName' },
             { data: 'LastName', name: 'LastName' },
             { data: 'Groups', name: 'Groups', orderable: true, searchable: true },
-            { data: 'StartDate', name: 'StartDate' },
-            { data: 'EndDate', name: 'EndDate' }
+            { data: 'StartDate', name: 'StartDate', orderable: true, searchable: false},
+            { data: 'EndDate', name: 'EndDate', orderable: true, searchable: false},
         ]       
     });
 

@@ -2,21 +2,26 @@
 
 use Faker\Generator as Faker;
 
-$factory->define(App\cdviCard::class, function (Faker $faker) {
+$factory->define(App\cdviCard::class, function (Faker $faker, $options) {
 
-    $family_number = mt_rand(1,10000);
-    $card_number = mt_rand(1,10000);
+    // $family_number = mt_rand(1,10000);
+    // $card_number = mt_rand(1,10000);
+
+    $family_number = (array_key_exists('Family Number', $options)) ? $options['Family Number'] : mt_rand(1,10000);
+    $card_number = (array_key_exists('Card Number', $options)) ? $options['Card Number'] : mt_rand(1,10000);
 
     return [
         'Site' => 0,
-        'Family Number' => mt_rand(1,10000),
-        'Card Number' => mt_rand(1,10000),
+        // 'Family Number' => mt_rand(1,10000),
+        // 'Card Number' => mt_rand(1,10000),
+        'Family Number' => $family_number,
+        'Card Number' => $card_number,
         'PIN Number' => 0,
         'First Name' => '',
         'Last Name' => '',
-        'Status' => 0,
-        'Start Date' => '2018-10-09 21:14:33.000',
-        'End Date' => '2018-10-09 21:14:33.000',
+        'Status' => 0,  // 4 za unasigned
+        'Start Date' => Carbon\Carbon::today()->toDateTimeString(),
+        'End Date' => Carbon\Carbon::today()->addDay()->toDateTimeString(),
         'Card Traced' => DB::raw(0),
         'Extended' => DB::raw(0),
         'Use Keypad' => DB::raw(0),
@@ -65,11 +70,12 @@ $factory->define(App\cdviCard::class, function (Faker $faker) {
         'Custom_UI' => DB::raw(0),
         'SendToOutbox' => DB::raw(0),
         'Description' => '',
-        'UserID' => function () {
-            return factory(App\cdviUser::class)->create()->UserID;
-        },
+        // 'UserID' => function () {
+        //     return factory(App\cdviUser::class)->create()->UserID;
+        // },
+        'UserID' => -1,
         'LastAccess' => -1,
-        'LastAccessTime' => '2018-09-25 00:29:17.000',
+        'LastAccessTime' => Carbon\Carbon::today()->toDateTimeString(),
         'CardNumHex' => strtoupper(str_pad(dechex($family_number).dechex($card_number),10,'0',STR_PAD_LEFT)),
         'GroupAccessLevel' => DB::raw(0),
         'Access Level3' => 1,

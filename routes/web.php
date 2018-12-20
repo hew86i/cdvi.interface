@@ -15,7 +15,9 @@
 //     return view('welcome');
 // });
 
-Route::get('/', 'HomeController@index');
+// Route::get('/', 'HomeController@index');
+// home route
+Route::get('/', 'DatatableController@getUsers')->name('cdvi.users');
 
 Route::get('/users', ['as' => 'users', 'uses' => 'HomeController@users']);
 Route::get('/cards', ['as' => 'cards', 'uses' => 'HomeController@cards']);
