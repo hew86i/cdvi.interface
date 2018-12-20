@@ -86,12 +86,12 @@
             <thead>
                 <tr>
                     <th></th>
-                    <th>UserID</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>User Group</th>
-                    <th>Start Date</th>
-                    <th>End Date</th>
+                    <th>ID</th>
+                    <th>Име/Картичка</th>
+                    <th>Презиме</th>
+                    <th>Вид на картичка</th>
+                    <th>Почеток</th>
+                    <th>Крај</th>
                 </tr>
             </thead>
             </table>

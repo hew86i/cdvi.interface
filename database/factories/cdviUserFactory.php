@@ -105,7 +105,7 @@ $factory->define(App\cdviUser::class, function (Faker $faker, $options) {
 /*  copy - paste for creating users
 
 $users = [];
-for($i=1; $i<=3; $i++) {
+for($i=1; $i<=10; $i++) {
     $firstName = "Ednodenvna " . str_pad($i, 4, '0', STR_PAD_LEFT);;
     $lastName = "";
     // echo $firstName;
