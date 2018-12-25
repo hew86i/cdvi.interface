@@ -11,7 +11,7 @@ $factory->define(App\cdviUser::class, function (Faker $faker, $options) {
         'SiteID' => 0,
         'FirstName' => $first_name,
         'LastName' => $last_name,
-        'Status' => 0,
+        'Status' => 0, // 2 za Temporary
         'StartDate' => Carbon\Carbon::today()->toDateTimeString(),
         'EndDate' => Carbon\Carbon::today()->addDay()->toDateTimeString(),
         'Traced' => DB::raw(0),

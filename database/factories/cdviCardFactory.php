@@ -19,7 +19,7 @@ $factory->define(App\cdviCard::class, function (Faker $faker, $options) {
         'PIN Number' => 0,
         'First Name' => '',
         'Last Name' => '',
-        'Status' => 0,  // 4 za unasigned
+        'Status' => 0,  // 4 za unasigned, 3 za Temporary
         'Start Date' => Carbon\Carbon::today()->toDateTimeString(),
         'End Date' => Carbon\Carbon::today()->addDay()->toDateTimeString(),
         'Card Traced' => DB::raw(0),
