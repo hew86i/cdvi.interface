@@ -4,11 +4,14 @@
 // commands file
 // -----------------------------
 
-
-// lista so hex i id
+// lista so hex i id  ---------------------------
 // se potpolnuva od file so regex priprema
 $data = [];
 
+// format na $data:
+// ex: ["hex" => '1FF12B', "id" => '0001']
+// regex: ([A-Z0-9]{6})\s([0-9]{10})\s(\d{4})
+// ["hex" => '$1', "id" => '$3'],
 // -----------------------------------------------------------------------
 $cards = [];
 $users = [];
@@ -20,9 +23,9 @@ foreach($data as $card) {
     $card_number = hexdec(substr($card["hex"], 2));
 
     //create user
-    $u = factory(App\cdviUser::class)->create(['FirstName' => $card["id"],'UserGroupID' => 1, 'Status' => 2]);
+    $u = factory(App\cdviUser::class)->create(['FirstName' => $card["id"], 'LastName' => $card["ime"], 'UserGroupID' => 7, 'Status' => 2]);
     array_push($users, $u);
-    // //create card
+    //create card
     array_push($cards, factory(App\cdviCard::class)->create(['Family Number' => $family_number, 'Card Number' => $card_number, 'UserID' => $u['UserID'], 'Status' => 3]));
 
 }

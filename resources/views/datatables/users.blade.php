@@ -87,8 +87,8 @@
                 <tr>
                     <th></th>
                     <th>ID</th>
-                    <th>Име/Картичка</th>
-                    <th>Презиме</th>
+                    <th>Картичка Бр.</th>
+                    <th>Име Презиме</th>
                     <th>Вид на картичка</th>
                     <th>Почеток</th>
                     <th>Крај</th>
@@ -168,7 +168,7 @@ $(function() {
 // group list envents
     // -----------------------------------
     $('#group_0').on('click', function(){
-        users_table.columns(4).search("^" + "Ednodnevni" + "$", true, false, true).draw();
+        users_table.columns(4).search("^" + "Dnevni" + "$", true, false, true).draw();
     })
     $('#group_1').on('click', function(){
         users_table.columns(4).search("^" + "Detski" + "$", true, false, true).draw();
@@ -187,6 +187,9 @@ $(function() {
     })
     $('#group_6').on('click', function(){
         users_table.columns(4).search("^" + "Neogranicen Pristap" + "$", true, false, true).draw();
+    })
+    $('#group_7').on('click', function(){
+        users_table.columns(4).search("^" + "Sezonski" + "$", true, false, true).draw();
     })
 
     //-----------------------------------
