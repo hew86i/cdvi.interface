@@ -21,7 +21,7 @@
 
 @php
 
-    $groups = App\cdviUserGroup::withCount('cdvi_users')->get();
+    $groups = App\cdviUserGroup::withCount('cdvi_users')->orderBy('ID', 'asc')->get();
 
 @endphp
 
@@ -148,7 +148,7 @@ $(function() {
         select: {
             'style': 'multi'
         },
-        'order': [[1, 'asc']],
+        'order': [[2, 'asc']],
         columns: [
             { data: 'checkbox', name: 'checkbox', orderable: false, searchable: false},  
             { data: 'UserID', name: 'UserID', orderable: true, searchable: false},

@@ -23,7 +23,7 @@ foreach($data as $card) {
     $card_number = hexdec(substr($card["hex"], 2));
 
     //create user
-    $u = factory(App\cdviUser::class)->create(['FirstName' => $card["id"], 'LastName' => $card["ime"], 'UserGroupID' => 7, 'Status' => 2]);
+    $u = factory(App\cdviUser::class)->create(['FirstName' => $card["id"], 'LastName' => $card["last"], 'UserGroupID' => $card["group"], 'Status' => 2]);
     array_push($users, $u);
     //create card
     array_push($cards, factory(App\cdviCard::class)->create(['Family Number' => $family_number, 'Card Number' => $card_number, 'UserID' => $u['UserID'], 'Status' => 3]));

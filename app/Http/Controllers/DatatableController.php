@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\cdviUser;
 use App\cdviCard;
 use App\cdviUserGroup;
+use App\cdviEvent;
 
 use DB;
 use DataTables;
@@ -76,6 +77,23 @@ class DatatableController extends Controller
         $_POST = array();
 
         // return Response::json(array('id' => $selected_id, 'start_date' => $start_date, 'end_date' => $end_date));
+
+    }
+
+    public function getReports()
+    {
+        return view('datatables.reports');
+    }
+
+    public function allReports()
+    {
+        $reports = cdviEvent::select(['Event ID','Field Time', 'UserNameID', 'Card Holder ID'])->where('Event Type', 1280)->orderBy('Event ID')->get();
+      
+        return Datatables::of($reports)
+            ->editColumn('Field Time', function ($event) {           
+                return date('d-m-Y H:i:s', strtotime($event['Field Time']) );
+            })        
+            ->make(true);;
 
     }
 

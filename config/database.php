@@ -81,6 +81,18 @@ return [
             'prefix_indexes' => true,
         ],
 
+        'events' => [
+            'driver' => 'sqlsrv',
+            'host' => env('DB_HOST', '192.168.0.14\\CDVI_CENTAUR'),
+            'port' => env('DB_PORT', '1433'),
+            'database' => env('DB_DATABASE2', 'Centaur3Events'),
+            'username' => env('DB_USERNAME', 'program'),
+            'password' => env('DB_PASSWORD', '123123'),
+            'charset' => 'utf8',
+            'prefix' => '',
+            'prefix_indexes' => true,
+        ],
+
     ],
 
     /*
