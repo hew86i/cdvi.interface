@@ -7,6 +7,8 @@ use App\cdviUser;
 use App\cdviCard;
 use App\cdviUserGroup;
 use App\cdviEvent;
+use App\cdviRecordName;
+use App\cdviUserName;
 
 use DB;
 use DataTables;
@@ -87,12 +89,20 @@ class DatatableController extends Controller
 
     public function allReports()
     {
-        $reports = cdviEvent::select(['Event ID','Field Time', 'UserNameID', 'Card Holder ID'])->where('Event Type', 1280)->orderBy('Event ID')->get();
+        $reports = cdviEvent::select(['Event ID','Field Time', 'UserNameID', 'Card Holder ID', 'Record Name ID'])->where('Event Type', 1280)->orderBy('Event ID')->get();
       
         return Datatables::of($reports)
             ->editColumn('Field Time', function ($event) {           
                 return date('d-m-Y H:i:s', strtotime($event['Field Time']) );
-            })        
+            })
+            ->editColumn('UserNameID', function ($event) {
+                $u = cdviUserName::select(['LastName','FirstName'])->where('UserNameID', $event['UserNameID'])->first();
+                return $u["FirstName"] . " " . $u["LastName"];
+            })  
+            ->editColumn('Record Name ID', function ($event) {
+                $r = cdviRecordName::select(['Name'])->where('Record Name ID', $event['Record Name ID'])->first();
+                return $r["Name"];
+            })      
             ->make(true);;
 
     }

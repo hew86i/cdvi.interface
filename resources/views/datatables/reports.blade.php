@@ -26,10 +26,10 @@
 @endphp
 
 <div class="row">
-    <div class="col-sm-2">
+    <div class="col-sm-1">
 
     </div>
-    <div class="col-sm-10">
+    <div class="col-sm-11">
 
         <form id="form"class="form-inline">
         
@@ -68,6 +68,7 @@
                     <th>Time</th>
                     <th>User ID</th>
                     <th>Card ID</th>
+                    <th>Lokacija</th>
                 </tr>
             </thead>
             </table>
@@ -92,8 +93,8 @@ $(function() {
     var users_table= $('#reports-table').DataTable({
         dom: '<"col-sm-12"B><"col-sm-12"f>t',
         processing: true,
-        serverSide: true,
-        select: true,
+        serverSide: false,
+        select: false,
         // deferLoading: 1,
         // pageLength: 20,
         paging: false,
@@ -122,6 +123,7 @@ $(function() {
             { data: 'Field Time', name: 'Field Time', orderable: true, searchable: false},
             { data: 'UserNameID', name: 'UserNameID', orderable: true, searchable: true},
             { data: 'Card Holder ID', name: 'Card Holder ID', orderable: true, searchable: true},
+            { data: 'Record Name ID', name: 'Record Name ID', orderable: true, searchable: true},
         ]       
     });
 
