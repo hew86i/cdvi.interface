@@ -20,8 +20,8 @@ class DatatableController extends Controller
     public function getUsers()
     {
         // $groups = cdviUserGroup::all();
-   
-        return view('datatables.users');
+        $e = new cdviEvent;
+        return view('datatables.users', ['event' => $e->get_today_all()]);
     }
 
     // return JSON of all users for datatable
@@ -31,7 +31,10 @@ class DatatableController extends Controller
 
         // $users = cdviUser::select(['UserID','FirstName','LastName', 'StartDate','EndDate']);
 
-        $users = DB::table('Users')->join('UserGroups', 'Users.UserGroupID', '=', 'UserGroups.ID')->select('Users.UserID','Users.FirstName','Users.LastName', 'Users.StartDate','Users.EndDate','UserGroups.Name')->get();
+        $users = DB::table('Users')
+                ->join('UserGroups', 'Users.UserGroupID', '=', 'UserGroups.ID')
+                ->select('Users.UserID','Users.FirstName','Users.LastName', 'Users.StartDate','Users.EndDate','UserGroups.Name')
+                ->get();
 
 
         // U::with(['user_group' =>function($q) {$q->select('Nom')->where('UserID', '=', 'user_group.ID');}])->get();
@@ -84,12 +87,27 @@ class DatatableController extends Controller
 
     public function getReports()
     {
-        return view('datatables.reports');
+       return view('datatables.reports');
     }
 
     public function allReports()
     {
-        $reports = cdviEvent::select(['Event ID','Field Time', 'UserNameID', 'Card Holder ID', 'Record Name ID'])->where('Event Type', 1280)->orderBy('Event ID')->get();
+
+        // $today_events = cdviEvent::with('user_info.user_group')->select('UserNameID')->distinct()
+        // ->where('Event Type', 1280)
+        // ->where('Field Time', '>',  date('Y-m-d 00:00:00'))->groupBy('UserNameID')->get();
+
+        // App\cdviEvent::distinct()->where('Event Type', 1280)->where('Field Time', '>', now()->addDay(-1))->get(['UserNameID'])->count()
+
+        $reports = cdviEvent::select(['Event ID','Field Time', 'UserNameID', 'Card Holder ID', 'Record Name ID'])
+                ->where('Event Type', 1280)
+                ->where('Field Time', '>',  date('Y-m-d 00:00:00'))
+                // ->groupBy('UserNameID')
+                ->orderBy('Event ID')
+                ->get();
+
+                // ->orderBy('Event ID')
+                // >select([DB::RAW('DISTINCT(UserNameID)'), 'Event ID','Field Time','Card Holder ID', 'Record Name ID'])
       
         return Datatables::of($reports)
             ->editColumn('Field Time', function ($event) {           

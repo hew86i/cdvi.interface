@@ -3,7 +3,7 @@
 @section('content')
     
 
-<h1>Листиг на Корисници</h1>
+<h1>- Листа со картички во употреба - </h1>
 <hr>
 
 <style>
@@ -28,18 +28,34 @@
 <div class="row">
     <div class="col-sm-2">
 
+        <div>
+            <h4>Вкупно : 
+                <span class="fa fa-id-card"></span> 
+                <span class="badge badge-dark badge-pill"><font color="green">{{$event->count()}}</font>/{{ App\cdviUser::count() }}</span>
+            </h4>
+        </div>
+
         <div class="list-group">
 
             @foreach ($groups as $group)
                 
-            <a href="#" id="group_{{$group->ID}}" class="list-group-item d-flex justify-content-between align-items-center list-group-item-action">
+            <a href="#" id="group_{{$group->ID}}" class="list-cards list-group-item d-flex justify-content-between align-items-center list-group-item-action">
 
                     <div>
                         <span class="fa fa-id-card"></span>
-                        {{ $group->Nom }}
+                        {{ $group->Nom }}                        
                     </div>
+                        @php
+                        $id = $group->ID;
+                        $filter = $event->filter(function ($item) use ($id){
+                            if(intval($item->user_info->first()->user_group->UserGroupID) == $id)
+                            {
+                                return $item;
+                            }
+                        })
+                        @endphp
                     
-                    <span class="badge badge-dark badge-pill">{{ $group->cdvi_users_count}}</span>
+                    <span class="badge badge-dark badge-pill"><font color="green">{{$filter->count()}}</font>/{{ $group->cdvi_users_count}}</span>
                     
                 </a>
 
@@ -114,14 +130,14 @@ $(function() {
     end_date = "";
   
     var users_table= $('#users-table').DataTable({
-        dom: '<"col-sm-12"B><"col-sm-12"f>t',
+        // dom: '<"col-sm-12"B><"col-sm-12"f>t',
         processing: true,
         serverSide: true,
-        select: true,
+        // select: true,
         // deferLoading: 1,
         // pageLength: 20,
-        paging: false,
-        scrollY: 500,
+        paging: true,
+        // scrollY: 500,
         language: {
             "info": "Прикажани _TOTAL_ записи", 
             "sProcessing": "Процесирање...",
@@ -165,31 +181,51 @@ $(function() {
         users_table.ajax.url('{!! route('cdvi.allusers') !!}').load();
         users_table.draw();
     })
-// group list envents
+    // group list envents
     // -----------------------------------
+
+
+
+
     $('#group_0').on('click', function(){
+        $('.list-cards').css({'background-color' : ''});
         users_table.columns(4).search("^" + "Dnevni" + "$", true, false, true).draw();
+        $(this).css('background-color', '#17a2b8');
     })
     $('#group_1').on('click', function(){
+        $('.list-cards').css({'background-color' : ''});
         users_table.columns(4).search("^" + "Detski" + "$", true, false, true).draw();
+        $(this).css('background-color', '#17a2b8');
     })    
     $('#group_2').on('click', function(){
+        $('.list-cards').css({'background-color' : ''});
         users_table.columns(4).search("^" + "Nedelni" + "$", true, false, true).draw();
+        $(this).css('background-color', '#17a2b8');
     })
     $('#group_3').on('click', function(){
+        $('.list-cards').css({'background-color' : ''});
         users_table.columns(4).search("^" + "Poludnevni" + "$", true, false, true).draw();
+        $(this).css('background-color', '#17a2b8');
     })
     $('#group_4').on('click', function(){
+        $('.list-cards').css({'background-color' : ''});
         users_table.columns(4).search("^" + "Nokni" + "$", true, false, true).draw();
+        $(this).css('background-color', '#17a2b8');
     })
     $('#group_5').on('click', function(){
+        $('.list-cards').css({'background-color' : ''});
         users_table.columns(4).search("^" + "Nedelni Detski" + "$", true, false, true).draw();
+        $(this).css('background-color', '#17a2b8');
     })
     $('#group_6').on('click', function(){
+        $('.list-cards').css({'background-color' : ''});
         users_table.columns(4).search("^" + "Neogranicen Pristap" + "$", true, false, true).draw();
+        $(this).css('background-color', '#17a2b8');
     })
     $('#group_7').on('click', function(){
+        $('.list-cards').css({'background-color' : ''});
         users_table.columns(4).search("^" + "Sezonski" + "$", true, false, true).draw();
+        $(this).css('background-color', '#17a2b8');
     })
 
     //-----------------------------------

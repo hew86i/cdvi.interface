@@ -18,5 +18,9 @@ class cdviUserName extends Model
 
     protected $fillable = ['SiteNameID','UserID','LastName','FirstName','CompanyName','DepartmentName','Photo','Visitor'];
 
-    // protected $guarded = ['Card_ID'];
+    public function user_group()
+    {        
+        return $this->hasOne('App\cdviUser', 'UserID', 'UserID');        
+    }
+
 }

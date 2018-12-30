@@ -91,14 +91,14 @@ $(function() {
     end_date = "";
   
     var users_table= $('#reports-table').DataTable({
-        dom: '<"col-sm-12"B><"col-sm-12"f>t',
+        // dom: '<"col-sm-12"B><"col-sm-12"f>t',
         processing: true,
-        serverSide: false,
+        serverSide: true,
         select: false,
         // deferLoading: 1,
         // pageLength: 20,
-        paging: false,
-        scrollY: 500,
+        paging: true,
+        // scrollY: 500,
         language: {
             "info": "Прикажани _TOTAL_ записи", 
             "sProcessing": "Процесирање...",
@@ -114,9 +114,9 @@ $(function() {
             // "url": "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Macedonian.json",
         },
         ajax: '{!! route('cdvi.allreports') !!}',
-        select: {
-            'style': 'multi'
-        },
+        // select: {
+        //     'style': 'multi'
+        // },
         'order': [[1, 'desc']],
         columns: [
             { data: 'Event ID', name: 'Event ID', orderable: true, searchable: false},  
@@ -127,11 +127,11 @@ $(function() {
         ]       
     });
 
-    // $('#btn_load_data').on('click', function (){
-    //     window.location.reload();
-    //     users_table.ajax.url('{!! route('cdvi.allreports') !!}').load();
-    //     users_table.draw();
-    // })
+    $('#btn_load_data').on('click', function (){
+        window.location.reload();
+        users_table.ajax.url('{!! route('cdvi.allreports') !!}').load();
+        users_table.draw();
+    })
 
     //-----------------------------------
     $("form").on('submit',function(e){
