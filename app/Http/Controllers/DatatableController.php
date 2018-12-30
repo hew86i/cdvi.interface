@@ -99,12 +99,19 @@ class DatatableController extends Controller
 
         // App\cdviEvent::distinct()->where('Event Type', 1280)->where('Field Time', '>', now()->addDay(-1))->get(['UserNameID'])->count()
 
+        // $u =DB::connection('events')->table('Events')->select([DB::raw('count(*) as c_p, UserNameID')])->where('Event Type', 1280)->where('Field Time', '>', '2018-12-28 00:00')->groupBy('UserNameID')->get()
+
+        $u =DB::connection('events')->table('Events')->select(['UserNameID', DB::raw('max("Field Time") as time')])->distinct()->where('Event Type', 1280)->where('Field Time', '>', '2018-12-28')->get();
+
         $reports = cdviEvent::select(['Event ID','Field Time', 'UserNameID', 'Card Holder ID', 'Record Name ID'])
+                select([DB::raw('UserNameID', max('Field Time'))])
                 ->where('Event Type', 1280)
-                ->where('Field Time', '>',  date('Y-m-d 00:00:00'))
+                ->where('Field Time', '>',  date('Y-m-28 00:00:00'))
                 // ->groupBy('UserNameID')
                 ->orderBy('Event ID')
                 ->get();
+
+                select(DB::raw('id_zbozi, max(id) as id'))
 
                 // ->orderBy('Event ID')
                 // >select([DB::RAW('DISTINCT(UserNameID)'), 'Event ID','Field Time','Card Holder ID', 'Record Name ID'])

@@ -24,7 +24,7 @@
 <body>
     
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 navbar-expand-md">
-        <div class="navbar-brand d-flex align-items-center justify-content-between col-sm-12 col-md-2 mr-0">
+        {{-- <div class="navbar-brand d-flex align-items-center justify-content-between col-sm-12 col-md-2 mr-0">
                 <img src="{{ asset('/images/ELEM-logo-164.png') }}" width="90" height="40" class="d-inline-block align-top" alt="">
                    ELEM
             <span class="navbar-text">
@@ -32,7 +32,22 @@
 
         <span class="navbar-text">
                <h3>СКИ Центар Попова Шапка</h3> 
-        </span>
+        </span> --}}
+
+        <a class="navbar-brand" href="#">
+            <img src="{{ asset('/images/ELEM-logo-164.png') }}" width="90" height="40" class="d-inline-block align-top" alt="">
+        </a>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="/">Картички <span class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url('/reports') }}">Извештај</a>
+            </li>
+        </ul>
+
     </nav>
     
     <div class="container-fluid">
