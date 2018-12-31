@@ -33,8 +33,8 @@
 
         <form id="form"class="form-inline">
         
-                <button id="btn_load_data" class="btn btn-info">Вчитај</button>
-                {{-- <button id="btn_selected" class="btn btn-danger">View Selected</button> --}}
+                <button id="btn_load_data" class="btn btn-info">Освежи</button>
+                <button id="btn_update" class="btn btn-info">Пребарај</button> 
                         
             <div class="form-group">
         
@@ -89,16 +89,21 @@ $(function() {
     selected_id = [];
     start_date = "";
     end_date = "";
-  
-    var users_table= $('#reports-table').DataTable({
-        // dom: '<"col-sm-12"B><"col-sm-12"f>t',
+
+    reports_table= $('#reports-table').DataTable({
+        dom: 'Blfrtip',
         processing: true,
-        serverSide: true,
+        serverSide: false,
         select: false,
         // deferLoading: 1,
         // pageLength: 20,
-        paging: true,
-        // scrollY: 500,
+        paging: false,
+        // cache : true,
+        scrollY: 450,
+        buttons: [
+            'excelHtml5',
+            'pdfHtml5'
+        ],
         language: {
             "info": "Прикажани _TOTAL_ записи", 
             "sProcessing": "Процесирање...",
@@ -113,10 +118,16 @@ $(function() {
             "sSearch": "<i class='fa fa-search'></i>",
             // "url": "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Macedonian.json",
         },
-        ajax: '{!! route('cdvi.allreports') !!}',
-        // select: {
-        //     'style': 'multi'
-        // },
+        // ajax: '{!! route('cdvi.allreports') !!}',
+        "ajax": {
+            url: '{!! route('cdvi.periodReports') !!}',
+            type: 'POST',
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            "data": function(d){
+                d.start_date = start_date;
+                d.end_date = end_date;
+            }
+        },
         'order': [[1, 'desc']],
         columns: [
             { data: 'Event ID', name: 'Event ID', orderable: true, searchable: false},  
@@ -128,9 +139,11 @@ $(function() {
     });
 
     $('#btn_load_data').on('click', function (){
-        window.location.reload();
-        users_table.ajax.url('{!! route('cdvi.allreports') !!}').load();
-        users_table.draw();
+        // window.location.reload();
+        start_date = "";
+        end_date = "";
+        $('#reports-table').DataTable().ajax.reload()
+        // reports_table.draw();
     })
 
     //-----------------------------------
@@ -161,6 +174,37 @@ $(function() {
         $('#start_date').datetimepicker('maxDate', e.date);
         end_date = String(moment($('#end_date').datetimepicker('viewDate')).format('YYYY-MM-DD HH:mm')) + ":00"
     });
+
+    $('#btn_update').on('click', function(){
+
+        if ($('#start_date input').val() != "" && $('#end_date input').val() != "") {
+     
+        console.log('Start Date: ' + start_date + ' - End date: ' + end_date)       
+
+        $.ajax({
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+            type: 'POST',
+            url: '{!! route('cdvi.periodReports') !!}',
+            data: {
+                start_date: start_date,
+                end_date: end_date,
+            },
+            success:function(data){
+                
+                console.log(data) 
+                $('#reports-table').DataTable().ajax.reload()
+
+                // start_date = ""
+                // end_date = ""
+
+            }
+        });
+
+        } else {
+            alert('Внесети ги датумите !!!')
+        }
+
+    })
 
        
 

@@ -27,5 +27,8 @@ Route::get('/datatable-allusers', 'DatatableController@allUsers')->name('cdvi.al
 
 Route::post('/datatable-update-dates', 'DatatableController@updateDates')->name('cdvi.updateDates');
 
+// report routes
 Route::get('/reports', 'DatatableController@getReports')->name('cdvi.reports');
 Route::get('/reports-all', 'DatatableController@allReports')->name('cdvi.allreports');
+
+Route::post('/datatable-get-reports', 'DatatableController@periodReports')->name('cdvi.periodReports');

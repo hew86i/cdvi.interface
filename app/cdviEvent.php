@@ -26,9 +26,13 @@ class cdviEvent extends Model
 
     public function get_today_all()
     {
-        // $e = cdviEvent::select('UserNameID')->distinct()->where('Event Type', 1280)->where('Field Time', '>',  date('Y-m-d 00:00:00'))->groupBy('UserNameID')->get();
-
-        return $today_events = cdviEvent::with('user_info.user_group')->select('UserNameID')->distinct()->where('Event Type', 1280)->where('Field Time', '>',  date('Y-m-d 00:00:00'))->groupBy('UserNameID')->get();
+        
+        return $today_events = cdviEvent::with('user_info.user_group')
+            ->select('UserNameID')->distinct()
+            ->where('Event Type', 1280)
+            ->where('Field Time', '>',  date('Y-m-d 00:00:00'))
+            ->groupBy('UserNameID')
+            ->get();
         
     //     // get user info
     //     $e->user_info()->first()->LastName;

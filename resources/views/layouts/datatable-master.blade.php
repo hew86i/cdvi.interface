@@ -64,6 +64,13 @@
     {{-- <script src="{{ asset('/js/dataTables.bootstrap.min.js') }}"></script>  --}}
     <script src="{{ asset('/js/dataTables.checkboxes.min.js') }}"></script> 
     <script src="{{ asset('/js/moment-with-locales.min.js') }}"></script> 
+    
+    {{-- buttons --}}
+    <script src="{{ asset('/js/dataTables.buttons.min.js') }}"></script> 
+    <script src="{{ asset('/js/buttons.html5.min.js') }}"></script> 
+    <script src="{{ asset('/js/jszip.min.js') }}"></script> 
+    <script src="{{ asset('/js/pdfmake.min.js') }}"></script> 
+    <script src="{{ asset('/js/vfs_fonts.js') }}"></script> 
         
     <script src="{{ asset('/js/tempusdominus-bootstrap-4.min.js') }}"></script> 
 

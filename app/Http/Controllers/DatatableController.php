@@ -93,28 +93,49 @@ class DatatableController extends Controller
     public function allReports()
     {
 
-        // $today_events = cdviEvent::with('user_info.user_group')->select('UserNameID')->distinct()
-        // ->where('Event Type', 1280)
-        // ->where('Field Time', '>',  date('Y-m-d 00:00:00'))->groupBy('UserNameID')->get();
-
-        // App\cdviEvent::distinct()->where('Event Type', 1280)->where('Field Time', '>', now()->addDay(-1))->get(['UserNameID'])->count()
-
-        // $u =DB::connection('events')->table('Events')->select([DB::raw('count(*) as c_p, UserNameID')])->where('Event Type', 1280)->where('Field Time', '>', '2018-12-28 00:00')->groupBy('UserNameID')->get()
-
-        $u =DB::connection('events')->table('Events')->select(['UserNameID', DB::raw('max("Field Time") as time')])->distinct()->where('Event Type', 1280)->where('Field Time', '>', '2018-12-28')->get();
-
+        // GET events by first user occurance for given period
         $reports = cdviEvent::select(['Event ID','Field Time', 'UserNameID', 'Card Holder ID', 'Record Name ID'])
-                select([DB::raw('UserNameID', max('Field Time'))])
-                ->where('Event Type', 1280)
-                ->where('Field Time', '>',  date('Y-m-28 00:00:00'))
-                // ->groupBy('UserNameID')
-                ->orderBy('Event ID')
-                ->get();
+            ->where('Event Type', 1280)
+            ->where('Field Time', '>',  date('Y-m-d 00:00:00'))
+            ->orderBy('UserNameID')
+            ->orderBy('Field Time', 'asc')
+            ->get();
 
-                select(DB::raw('id_zbozi, max(id) as id'))
+        $reports = $reports->unique('UserNameID');
+      
+        return Datatables::of($reports)
+            ->editColumn('Field Time', function ($event) {           
+                return date('d-m-Y H:i:s', strtotime($event['Field Time']) );
+            })
+            ->editColumn('UserNameID', function ($event) {
+                $u = cdviUserName::select(['LastName','FirstName'])->where('UserNameID', $event['UserNameID'])->first();
+                return $u["FirstName"] . " " . $u["LastName"];
+            })  
+            ->editColumn('Record Name ID', function ($event) {
+                $r = cdviRecordName::select(['Name'])->where('Record Name ID', $event['Record Name ID'])->first();
+                return $r["Name"];
+            })      
+            ->make(true);;
 
-                // ->orderBy('Event ID')
-                // >select([DB::RAW('DISTINCT(UserNameID)'), 'Event ID','Field Time','Card Holder ID', 'Record Name ID'])
+    }
+
+    public function periodReports()
+    {
+
+        $start_date = (isset($_POST["start_date"]) && !empty($_POST["start_date"])) ? $_POST["start_date"] : date("Y-m-d 00:00:00");
+        $end_date = (isset($_POST["end_date"]) && !empty($_POST["end_date"])) ? $_POST["end_date"] : date("Y-m-d H:i:s");
+
+
+        // GET events by first user occurance for given period
+        $reports = cdviEvent::select(['Event ID','Field Time', 'UserNameID', 'Card Holder ID', 'Record Name ID'])
+            ->where('Event Type', 1280)
+            ->where('Field Time', '>=',  (string)$start_date)
+            ->where('Field Time', '<=',  (string)$end_date)
+            ->orderBy('UserNameID')
+            ->orderBy('Field Time', 'asc')
+            ->get();
+
+        $reports = $reports->unique('UserNameID');
       
         return Datatables::of($reports)
             ->editColumn('Field Time', function ($event) {           
