@@ -4,6 +4,21 @@
 // commands file
 // -----------------------------
 
+// USER GROUPS
+// ----------------------------------
+
+// ID	SiteID	Name	Nom
+// 0	0	Dnevni	Дневни
+// 1	0	Detski	Детски
+// 2	0	Nedelni	Неделни
+// 3	0	Poludnevni	Полудневни
+// 4	0	Nokni	Ноќни
+// 5	0	Nedelni Detski	Неделни детски
+// 6	0	Neogranicen Pristap	Неограничен пристап
+// 7	0	Sezonski	Сезонски
+// ----------------------------------------
+
+
 // lista so hex i id  ---------------------------
 // se potpolnuva od file so regex priprema
 $data = [];
@@ -12,6 +27,7 @@ $data = [];
 // ex: ["hex" => '1FF12B', "id" => '0001']
 // regex: ([A-Z0-9]{6})\s([0-9]{10})\s(\d{4})
 // ["hex" => '$1', "id" => '$3'],
+// ["hex" => '$1', "id" => '$3', "last" => "Dnevni", "group" => 0],
 // -----------------------------------------------------------------------
 $cards = [];
 $users = [];
